@@ -1,16 +1,5 @@
 use std::collections::HashMap;
 
-const DIGIT0: &str = " _ | ||_|";
-const DIGIT1: &str = "     |  |";
-const DIGIT2: &str = " _  _||_ ";
-const DIGIT3: &str = " _  _| _|";
-const DIGIT4: &str = "   |_|  |";
-const DIGIT5: &str = " _ |_  _|";
-const DIGIT6: &str = " _ |_ |_|";
-const DIGIT7: &str = " _   |  |";
-const DIGIT8: &str = " _ |_||_|";
-const DIGIT9: &str = " _ |_| _|";
-
 fn main() {
     let mut digits_hash = HashMap::new();
 
@@ -33,16 +22,16 @@ fn main() {
 }
 
 fn populate_digits(digits: &mut HashMap<&str, u32>) {
-    digits.insert(DIGIT0, 0);
-    digits.insert(DIGIT1, 1);
-    digits.insert(DIGIT2, 2);
-    digits.insert(DIGIT3, 3);
-    digits.insert(DIGIT4, 4);
-    digits.insert(DIGIT5, 5);
-    digits.insert(DIGIT6, 6);
-    digits.insert(DIGIT7, 7);
-    digits.insert(DIGIT8, 8);
-    digits.insert(DIGIT9, 9);
+    digits.insert(" _ | ||_|", 0);
+    digits.insert("     |  |", 1);
+    digits.insert(" _  _||_ ", 2);
+    digits.insert(" _  _| _|", 3);
+    digits.insert("   |_|  |", 4);
+    digits.insert(" _ |_  _|", 5);
+    digits.insert(" _ |_ |_|", 6);
+    digits.insert(" _   |  |", 7);
+    digits.insert(" _ |_||_|", 8);
+    digits.insert(" _ |_| _|", 9);
 }
 
 fn _print_digit(digit: &str) {
