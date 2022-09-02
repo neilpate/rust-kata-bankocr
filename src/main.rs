@@ -15,29 +15,36 @@ fn main() -> Result<(), Error> {
         Err(why) => panic!("Could not read {}: {}", path.display(), why),
     };
 
-    let mut line1 = String::new();
-    let mut line2 = String::new();
-    let mut line3 = String::new();
+    for _n in 0..12 {
+        let mut line1 = String::new();
+        let mut line2 = String::new();
+        let mut line3 = String::new();
 
-    buffered_file.read_line(&mut line1)?;
-    let first_line = &line1.as_str();
+        buffered_file.read_line(&mut line1)?;
+        let first_line = &line1.as_str();
 
-    buffered_file.read_line(&mut line2)?;
-    let second_line = &line2.as_str();
+        buffered_file.read_line(&mut line2)?;
+        let second_line = &line2.as_str();
 
-    buffered_file.read_line(&mut line3)?;
-    let third_line = &line3.as_str();
+        buffered_file.read_line(&mut line3)?;
+        let third_line = &line3.as_str();
 
-    let detected_digits = (0..9)
-        .map(|i| {
-            detect_digit(
-                &digits_hash,
-                extract_digit(first_line, second_line, third_line, i),
-            )
-        })
-        .collect::<Vec<u8>>();
+        let detected_digits = (0..9)
+            .map(|i| {
+                detect_digit(
+                    &digits_hash,
+                    extract_digit(first_line, second_line, third_line, i),
+                )
+            })
+            .collect::<Vec<u8>>();
 
-    detected_digits.iter().for_each(|digit| print!("{}", digit));
+        println!("{}", first_line.trim_end());
+        println!("{}", second_line.trim_end());
+        println!("{}", third_line.trim_end());
+
+        detected_digits.iter().for_each(|digit| print!("{}", digit));
+        println!();
+    }
 
     Ok(())
 }
