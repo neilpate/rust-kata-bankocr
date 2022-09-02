@@ -1,13 +1,32 @@
-use std::collections::HashMap;
+use std::fs::File;
+use std::io::{BufRead, BufReader, Error};
+use std::{collections::HashMap, path::Path};
 
-fn main() {
+fn main() -> Result<(), Error> {
     let mut digits_hash = HashMap::new();
 
     populate_digits(&mut digits_hash);
 
-    let first_line = "    _  _     _  _  _  _  _ ";
-    let second_line = "  | _| _||_||_ |_   ||_||_|";
-    let third_line = "  ||_  _|  | _||_|  ||_| _|";
+    let path = Path::new("resource\\accounts.txt");
+    println!("{}", path.display());
+
+    let mut buffered_file = match File::open(&path) {
+        Ok(file) => BufReader::new(file),
+        Err(why) => panic!("Could not read {}: {}", path.display(), why),
+    };
+
+    let mut line1 = String::new();
+    let mut line2 = String::new();
+    let mut line3 = String::new();
+
+    buffered_file.read_line(&mut line1)?;
+    let first_line = &line1.as_str();
+
+    buffered_file.read_line(&mut line2)?;
+    let second_line = &line2.as_str();
+
+    buffered_file.read_line(&mut line3)?;
+    let third_line = &line3.as_str();
 
     let detected_digits = (0..9)
         .map(|i| {
@@ -19,6 +38,8 @@ fn main() {
         .collect::<Vec<u8>>();
 
     detected_digits.iter().for_each(|digit| print!("{}", digit));
+
+    Ok(())
 }
 
 fn populate_digits(digits: &mut HashMap<&str, u32>) {
@@ -44,12 +65,14 @@ fn extract_digit(line1: &str, line2: &str, line3: &str, index: usize) -> String 
     let start: usize = index * 3;
     let stop = start + 3;
 
-    format!(
+    let composite_string = format!(
         "{}{}{}",
         &line1[start..stop],
         &line2[start..stop],
         &line3[start..stop]
-    )
+    );
+
+    composite_string
 }
 
 fn detect_digit(digits: &HashMap<&str, u32>, digit_to_detect: String) -> u8 {
@@ -58,44 +81,3 @@ fn detect_digit(digits: &HashMap<&str, u32>, digit_to_detect: String) -> u8 {
         None => 255,
     }
 }
-//     _  _  _  _  _  _  _  _  _
-//    | || || || || || || || || |
-//    |_||_||_||_||_||_||_||_||_|
-
-//     |  |  |  |  |  |  |  |  |
-//     |  |  |  |  |  |  |  |  |
-
-//    _  _  _  _  _  _  _  _  _
-//    _| _| _| _| _| _| _| _| _|
-//   |_ |_ |_ |_ |_ |_ |_ |_ |_
-
-//    _  _  _  _  _  _  _  _  _
-//    _| _| _| _| _| _| _| _| _|
-//    _| _| _| _| _| _| _| _| _|
-
-//   |_||_||_||_||_||_||_||_||_|
-//     |  |  |  |  |  |  |  |  |
-
-//    _  _  _  _  _  _  _  _  _
-//   |_ |_ |_ |_ |_ |_ |_ |_ |_
-//    _| _| _| _| _| _| _| _| _|
-
-//    _  _  _  _  _  _  _  _  _
-//   |_ |_ |_ |_ |_ |_ |_ |_ |_
-//   |_||_||_||_||_||_||_||_||_|
-
-//    _  _  _  _  _  _  _  _  _
-//     |  |  |  |  |  |  |  |  |
-//     |  |  |  |  |  |  |  |  |
-
-//    _  _  _  _  _  _  _  _  _
-//   |_||_||_||_||_||_||_||_||_|
-//   |_||_||_||_||_||_||_||_||_|
-
-//    _  _  _  _  _  _  _  _  _
-//   |_||_||_||_||_||_||_||_||_|
-//    _| _| _| _| _| _| _| _| _|
-
-//       _  _     _  _  _  _  _
-//     | _| _||_||_ |_   ||_||_|
-//     ||_  _|  | _||_|  ||_| _|
