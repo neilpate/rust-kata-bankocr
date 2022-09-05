@@ -16,7 +16,10 @@ fn main() -> Result<(), Error> {
 
     loop {
         match process_next_account_number(&mut buffered_file) {
-            Ok(account_number) => println!("{}", account_number.number),
+            Ok(account_number) => {
+                println!("{}", account_number);
+                // println!("Debug: {:#?}", account_number);    // testing the pretty printed debug implementation
+            }
             Err(e) => {
                 println!("{}", e);
                 break;

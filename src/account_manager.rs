@@ -1,3 +1,6 @@
+use std::fmt;
+
+#[derive(Debug)]
 pub struct AccountNumber {
     pub number: String,
     line1: String,
@@ -33,6 +36,13 @@ impl AccountNumber {
         println!("{}", self.number);
     }
 }
+
+impl fmt::Display for AccountNumber {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.number.as_str())
+    }
+}
+
 fn extract_digit(line1: &str, line2: &str, line3: &str, index: usize) -> String {
     let start: usize = index * 3;
     let stop = start + 3;
